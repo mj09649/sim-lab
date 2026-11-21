@@ -10,8 +10,98 @@ from image_ops import adjust_contrast_brightness, augment_image, degrade_resolut
 MAX_SIDE = 1600  # 너무 큰 이미지는 이 크기로 줄여서 처리 (느려짐 방지)
 
 st.set_page_config(page_title="Sim Lab", page_icon="🧪", layout="wide")
-st.title("🧪 Sim Lab — 해상도 & 데이터 증강 시뮬레이터")
-st.caption("해상도 저하(Downsampling)에 따른 형태 변화를 확인하고, 밝기·대비 보정 및 데이터 증강 효과를 비교합니다.")
+
+st.markdown(
+    """
+    <style>
+        .stApp {
+            background:
+                radial-gradient(circle at 12% 18%, rgba(125, 211, 252, 0.24), transparent 36%),
+                radial-gradient(circle at 88% 28%, rgba(196, 181, 253, 0.26), transparent 38%),
+                radial-gradient(circle at 75% 78%, rgba(167, 243, 208, 0.22), transparent 40%),
+                linear-gradient(180deg, #f8faff 0%, #f4f6ff 55%, #f9faff 100%);
+            color: #1e293b;
+        }
+        [data-testid="stSidebar"] {
+            background: linear-gradient(180deg, #ffffff 0%, #f5f7ff 100%);
+            border-right: 1px solid rgba(148, 163, 184, 0.18);
+        }
+        .hero-banner {
+            background: linear-gradient(115deg, #99f6e4 0%, #93c5fd 48%, #c4b5fd 100%);
+            border-radius: 24px;
+            padding: 28px 32px;
+            margin-bottom: 20px;
+            box-shadow: 0 12px 32px rgba(99, 102, 241, 0.10);
+            border: 1px solid rgba(255, 255, 255, 0.75);
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.72);
+            color: #3730a3;
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 999px;
+            margin-bottom: 10px;
+        }
+        .hero-title {
+            margin: 0;
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.02em;
+        }
+        .hero-sub {
+            margin: 8px 0 0 0;
+            font-size: 0.98rem;
+            color: #334155;
+        }
+        [data-testid="stMetric"] {
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            border-radius: 18px;
+            padding: 16px 20px;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+        }
+        [data-testid="stMetricValue"] {
+            color: #2563eb;
+            font-weight: 700;
+        }
+        [data-testid="stImage"] img {
+            border-radius: 18px;
+            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+        }
+        .stButton > button, .stDownloadButton > button {
+            border-radius: 14px;
+            border: 1px solid rgba(99, 102, 241, 0.22);
+            background: #ffffff;
+            color: #1e293b;
+            font-weight: 600;
+            padding: 0.55rem 1rem;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.08);
+            transition: all 0.2s ease;
+        }
+        .stButton > button:hover, .stDownloadButton > button:hover {
+            border-color: #6366f1;
+            background: #eef2ff;
+            color: #3730a3;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+st.markdown(
+    """
+    <div class="hero-banner">
+        <div class="hero-badge">IMAGE RESOLUTION &amp; AUGMENTATION LAB</div>
+        <h1 class="hero-title">🧪 Sim Lab — 해상도 &amp; 데이터 증강 시뮬레이터</h1>
+        <p class="hero-sub">해상도 저하에 따른 시각 정보 변화를 관찰하고, 밝기·대비 보정 및 데이터 증강 결과를 나란히 비교합니다.</p>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
 
 def sample_image():
